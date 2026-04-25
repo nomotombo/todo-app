@@ -7,6 +7,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
+from email.utils import formataddr
 
 USER_FILE = "users.json"
 TASK_FILE = "tasks.json"
@@ -20,8 +21,8 @@ SENDER_PASSWORD = "dgey hlpj ugow ylwe"
 
 def send_email(to_email, subject, body):
     msg = MIMEText(body, "plain", "utf-8")
-    msg["Subject"] = subject
-    msg["From"] = SENDER_EMAIL
+    msg["Subject"] = str(Header(subject, "utf-8"))
+    msg["From"] = formataddr((str(Header("Todo App", "utf-8")), SENDER_EMAIL))
     msg["To"] = to_email
 
     with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
